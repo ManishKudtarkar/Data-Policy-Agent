@@ -1,0 +1,5 @@
+app_name: "DataPolicyAgent"
+db_path: "data/bank_data.db"
+model_path: "model_store/model.pkl"
+gemini_model: "models/gemini-flash-latest"
+inbox_path: "inbox/"

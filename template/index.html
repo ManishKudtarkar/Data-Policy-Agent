@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Agent - AI-Powered Policy Audit System</title>
+    <meta name="description" content="AI-powered compliance auditing system with Gemini integration">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="40" height="40" rx="10" fill="url(#logoGradient)"/>
+                        <path d="M20 10L28 16V24L20 30L12 24V16L20 10Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+                        <path d="M16 20L19 23L24 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>Compliance Agent</h1>
+                    <span class="logo-tagline">AI-Powered Policy Auditing</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="status-badge" id="status-badge">
+                    <span class="status-indicator" id="status-indicator"></span>
+                    <span id="api-status">Checking...</span>
+                </div>
+                <button class="btn-icon" id="theme-toggle" title="Toggle theme">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="stats-bar" style="display: none;">
+            <div class="stat-item">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="total-audits">0</span>
+                    <span class="stat-label">Total Audits</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="total-violations-stat">0</span>
+                    <span class="stat-label">Violations Found</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="last-scan-time">--</span>
+                    <span class="stat-label">Last Scan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-card glass-effect">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2>Policy Document Upload</h2>
+                            <p class="subtitle">Upload a policy document to perform AI-powered compliance audit</p>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-area" id="upload-area">
+                        <div class="upload-icon-wrapper">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="32" cy="32" r="30" fill="#F0F4FF" opacity="0.5"/>
+                                <path d="M32 20V44M20 32H44" stroke="url(#uploadGradient)" stroke-width="4" stroke-linecap="round"/>
+                                <defs>
+                                    <linearGradient id="uploadGradient" x1="20" y1="20" x2="44" y2="44">
+                                        <stop offset="0%" stop-color="#6366F1"/>
+                                        <stop offset="100%" stop-color="#8B5CF6"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3>Drag & Drop Your Document Here</h3>
+                        <p class="upload-description">or click to browse from your computer</p>
+                        <div class="supported-formats">
+                            <span class="format-badge">PDF</span>
+                            <span class="format-badge">TXT</span>
+                        </div>
+                        <input type="file" id="file-input" accept=".pdf,.txt" hidden>
+                        <button class="btn-primary btn-glow" id="select-file-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Choose File
+                        </button>
+                    </div>
+
+                    <div class="selected-file" id="selected-file" style="display: none;">
+                        <div class="file-preview">
+                            <div class="file-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M14 2V8H20" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 13H15M9 17H15" stroke="#6366F1" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="file-details">
+                                <p class="file-name" id="file-name"></p>
+                                <p class="file-size" id="file-size"></p>
+                                <div class="file-status">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981">
+                                        <path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Ready to audit
+                                </div>
+                            </div>
+                            <button class="btn-remove" id="remove-file-btn" title="Remove file">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="progress-section" id="progress-section" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p class="progress-text" id="progress-text">Processing...</p>
+                    </div>
+
+                    <button class="btn-audit btn-glow" id="audit-btn" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="22 4 12 14.01 9 11.01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span id="audit-btn-text">Run Compliance Audit</span>
+                        <div class="spinner" id="spinner" style="display: none;"></div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="results-section" style="display: none;">
+                <div class="results-card glass-effect">
+                    <div class="results-header">
+                        <div>
+                            <h2>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="vertical-align: middle; margin-right: 8px;">
+                                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Audit Report
+                            </h2>
+                            <p class="results-subtitle">AI-generated compliance analysis results</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn-icon" id="print-report-btn" title="Print Report">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6 14h12v8H6z" stroke-width="2"/>
+                                </svg>
+                            </button>
+                            <button class="btn-secondary btn-glow" id="download-report-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Download Report
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="summary-grid">
+                        <div class="summary-card gradient-border">
+                            <div class="summary-icon gradient-blue">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="summary-content">
+                                <p class="summary-label">Policy Document</p>
+                                <p class="summary-value" id="policy-name">-</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-card gradient-border">
+                            <div class="summary-icon gradient-red">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="summary-content">
+                                <p class="summary-label">Total Violations</p>
+                                <p class="summary-value highlight-red" id="total-violations">0</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-card gradient-border">
+                            <div class="summary-icon gradient-green">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="summary-content">
+                                <p class="summary-label">Scan Status</p>
+                                <p class="summary-value highlight-green" id="scan-status">Completed</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-card gradient-border">
+                            <div class="summary-icon gradient-purple">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="summary-content">
+                                <p class="summary-label">Processing Time</p>
+                                <p class="summary-value" id="processing-time">--</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-tabs" id="filter-tabs">
+                        <button class="tab-btn active" data-filter="all">All Results</button>
+                        <button class="tab-btn" data-filter="violations">Violations Only</button>
+                        <button class="tab-btn" data-filter="compliant">Compliant</button>
+                    </div>
+
+                    <div class="violations-container" id="violations-container">
+                        <!-- Violations will be dynamically inserted here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="vertical-align: middle; margin-right: 4px;">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Powered by <strong>Gemini AI</strong> + ML Fusion
+                </p>
+                <p class="footer-links">
+                    <a href="#" id="about-link">About</a> · 
+                    <a href="#" id="docs-link">Documentation</a> · 
+                    <a href="#" id="privacy-link">Privacy</a>
+                </p>
+            </div>
+            <p class="copyright">© 2026 Compliance Agent. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon" id="toast-icon"></div>
+        <div class="toast-content">
+            <p class="toast-title" id="toast-title">Notification</p>
+            <p class="toast-message" id="toast-message">Message</p>
+        </div>
+        <button class="toast-close" id="toast-close">×</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

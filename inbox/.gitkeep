@@ -1,0 +1,2 @@
+# Place new PDF policies in this folder for processing
+# The compliance agent will automatically detect and process new files

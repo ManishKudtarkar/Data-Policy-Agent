@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pandas
+scikit-learn  # Or whatever library created your .pkl
+google-generativeai
+python-dotenv
+pyyaml
+python-multipart
